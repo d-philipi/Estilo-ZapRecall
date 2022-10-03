@@ -7,7 +7,7 @@ export default function App () {
     return(
         <Container>
             <Logo>
-                <img src="./assets/img/logo.png" alt="Logo do site"/>
+                <img src="./img/logo.png" alt="Logo do site"/>
                 <h1>ZapRecall</h1>
             </Logo>
             <Perguntas></Perguntas>

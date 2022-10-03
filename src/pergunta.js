@@ -6,11 +6,11 @@ export default function Pergunta(props){
         <>
             <PerguntaFechada>
                 <p>Pergunta {props.index}</p>
-                <img src="./assets/img/seta_play.png" alt="Seta para ver a pergunta" />
+                <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
             </PerguntaFechada>
             <PerguntaAberta>
                 <p>{props.questao}</p>
-                <img src="./assets/img/seta_virar.png" alt="Seta para ver a resposta" />
+                <img src="./img/seta_virar.png" alt="Seta para ver a resposta" />
             </PerguntaAberta>
             <PerguntaAberta>
                 <p>{props.resposta}</p>
