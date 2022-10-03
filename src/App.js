@@ -1,23 +1,219 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import Perguntas from './perguntas';
 
+const perguntas = [
+    {Q:"O que é JSX?",R:"Uma extensão de linguagem do JavaScript"},
+    {Q:"O React é __",R:"uma biblioteca JavaScript para construção de interfaces"},
+    {Q:"Componentes devem iniciar com __",R:"letra maiúscula"},
+    {Q:"Podemos colocar __ dentro do JSX",R:"expressões"}
+];
+
+const naoLembrado = [];
+
+const quaseLembrado = [];
+
+const lembrado = [];
+
+const respondidas = [];
 
 export default function App () {
+    const [desabilitar,setDesabilitar] = useState(true);
+
+    const[pergunta, setPergunta] = useState(perguntas.map((p,index) => 
+    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+        <p>Pergunta {index + 1}</p>
+        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+    </PerguntaFechada>
+    ));
+
+    const [questionClicada, setQuestionClicada] = useState();
+    const [contador, setContador] = useState(0);
+
+    function renderApp(p,index){
+
+        if(naoLembrado.includes(p)){
+            return(
+                <PerguntaFechada key={index}>
+                    <p>Pergunta {index + 1}</p>
+                    <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                </PerguntaFechada>
+            )
+        }else if(quaseLembrado.includes(p)){
+            return(
+                <PerguntaFechada key={index}>
+                    <p>Pergunta {index + 1}</p>
+                    <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                </PerguntaFechada>
+            )
+        }else if(lembrado.includes(p)){
+            return(
+                <PerguntaFechada key={index}>
+                    <p>Pergunta {index + 1}</p>
+                    <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                </PerguntaFechada>
+            )
+        }else{
+            return(
+                <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                    <p>Pergunta {index + 1}</p>
+                    <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                </PerguntaFechada>
+            )
+        }
+    };
+
+    function verPergunta(indice){
+
+        function jaRespondidas(p,index){
+            if(naoLembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(quaseLembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(lembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(indice === index){
+                setQuestionClicada(perguntas[indice]);
+                return(
+                    <PerguntaAberta onClick={() => verResposta(index)} key={index}>
+                        <p>{p.Q}</p>
+                        <img src="./img/seta_virar.png" alt="Seta para ver a pergunta" />
+                    </PerguntaAberta>
+                )
+            }else{
+                return(
+                    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }
+        };
+
+        setPergunta(perguntas.map(jaRespondidas));
+
+        setDesabilitar(false);
+
+        console.log("Quero ver a pergunta");
+    };
+
+    function verResposta(indice){
+
+        function perguntaComRespostas(p,index){
+            if(naoLembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(quaseLembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(lembrado.includes(p)){
+                return(
+                    <PerguntaFechada key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }else if(indice === index){
+                setQuestionClicada(perguntas[indice]);
+                return(
+                    <PerguntaAberta onClick={() => verResposta(index)} key={index}>
+                        <p>{p.R}</p>
+                        <img src="./img/seta_virar.png" alt="Seta para ver a pergunta" />
+                    </PerguntaAberta>
+                )
+            }else{
+                return(
+                    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                        <p>Pergunta {index + 1}</p>
+                        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                    </PerguntaFechada>
+                )
+            }
+        };
+
+        setPergunta(perguntas.map(perguntaComRespostas));
+
+        setDesabilitar(false);
+
+        console.log("Quero ver a resposta");
+    };
+
+    function naoLembrei(questao){
+        naoLembrado.push(questao);
+        respondidas.push(questao);
+        console.log("Não lembrei!", naoLembrado);
+        setDesabilitar(true);
+        setContador(contador + 1);
+        setPergunta(perguntas.map(renderApp));
+
+        if(contador + 1 === 4){
+            alert("Você finalizou!");
+        }
+    };
+
+    function quaseNao(questao){
+        quaseLembrado.push(questao);
+        respondidas.push(questao);
+        console.log("Quase não lembrei", quaseLembrado);
+        setDesabilitar(true);
+        setContador(contador + 1);
+        setPergunta(perguntas.map(renderApp));
+
+        if(contador + 1 === 4){
+            alert("Você finalizou!");
+        }
+    };
+
+    function zapLembrei(questao){
+        lembrado.push(questao);
+        respondidas.push(questao);
+        console.log("Zap, lembrei!", lembrado);
+        setDesabilitar(true);
+        setContador(contador + 1);
+        setPergunta(perguntas.map(renderApp));
+
+        if(contador + 1 === 4){
+            alert("Você finalizou!");
+        }
+    };
+
     return(
         <Container>
             <Logo>
                 <img src="./img/logo.png" alt="Logo do site"/>
                 <h1>ZapRecall</h1>
             </Logo>
-            <Perguntas></Perguntas>
+            {pergunta}
             <Concluidos>
                 <ContainerBotao>
-                    <Botao1>Não lembrei</Botao1>
-                    <Botao2>Quase não lembrei</Botao2>
-                    <Botao3>Zap!</Botao3>
+                    <Botao1 disabled={desabilitar} onClick={() => naoLembrei(questionClicada)}>Não lembrei</Botao1>
+                    <Botao2 disabled={desabilitar} onClick={() => quaseNao(questionClicada)}>Quase não lembrei</Botao2>
+                    <Botao3 disabled={desabilitar} onClick={() => zapLembrei(questionClicada)}>Zap!</Botao3>
                 </ContainerBotao>
-                0/4 CONCLUÍDOS
+                {contador}/4 CONCLUÍDOS
             </Concluidos>
         </Container>
     )
@@ -118,6 +314,7 @@ const PerguntaFechada = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     p {
         font-family: 'Recursive', sans-serif;
         font-style: normal;
@@ -128,8 +325,8 @@ const PerguntaFechada = styled.div`
     }
     img{
         position: absolute;
-        bottom: 10px;
-        right: 10px;
+        bottom: 20px;
+        right: 15px;
     }
 `
 
@@ -155,7 +352,7 @@ const PerguntaAberta = styled.div`
     }
     img{
         position: absolute;
-        bottom: 10px;
-        right: 10px;
+        bottom: 15px;
+        right: 15px;
     }
 `

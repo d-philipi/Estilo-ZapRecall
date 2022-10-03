@@ -1,20 +1,32 @@
+import React, { useState } from "react";
 import styled from 'styled-components';
 
-export default function Pergunta(props){
-    console.log(props);
+export default function Pergunta({setDesabilitar}){
+    const perguntas = [
+        {Q:"O que é JSX?",R:"Uma extensão de linguagem do JavaScript"},
+        {Q:"O React é __",R:"uma biblioteca JavaScript para construção de interfaces"},
+        {Q:"Componentes devem iniciar com __",R:"letra maiúscula"},
+        {Q:"Podemos colocar __ dentro do JSX",R:"expressões"}
+    ]
+
+    function verPergunta(){
+        console.log("Quero ver a pergunta");
+    }
+
+    function verResposta(){
+        console.log("Quero ver a resposta");
+    }
+
+    const[pergunta, setPergunta] = useState(perguntas.map((p,index) => 
+    <PerguntaFechada onClick={verPergunta} key={index}>
+        <p>Pergunta {index + 1}</p>
+        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+    </PerguntaFechada>
+    ))
+
     return(
         <>
-            <PerguntaFechada>
-                <p>Pergunta {props.index}</p>
-                <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
-            </PerguntaFechada>
-            <PerguntaAberta>
-                <p>{props.questao}</p>
-                <img src="./img/seta_virar.png" alt="Seta para ver a resposta" />
-            </PerguntaAberta>
-            <PerguntaAberta>
-                <p>{props.resposta}</p>
-            </PerguntaAberta>
+            {pergunta}
         </>
     )
 }
