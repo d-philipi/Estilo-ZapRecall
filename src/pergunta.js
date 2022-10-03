@@ -84,3 +84,15 @@ const PerguntaAberta = styled.div`
         right: 15px;
     }
 `
+
+
+setPergunta(perguntas.map((p,index) => (indice === index) ?
+        <PerguntaAberta onClick={() => verResposta(index)} key={index}>
+            <p>{p.Q}</p>
+            <img src="./img/seta_virar.png" alt="Seta para ver a pergunta" />
+        </PerguntaAberta> 
+        :
+        <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+            <p>Pergunta {index + 1}</p>
+            <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+        </PerguntaFechada>))

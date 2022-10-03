@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import Botoes from './botoes';
 import Perguntas from './perguntas';
 
 const perguntas = [
@@ -21,9 +22,9 @@ export default function App () {
     const [desabilitar,setDesabilitar] = useState(true);
 
     const[pergunta, setPergunta] = useState(perguntas.map((p,index) => 
-    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+    <PerguntaFechada data-identifier="flashcard" key={index}>
         <p>Pergunta {index + 1}</p>
-        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+        <img data-identifier="flashcard-show-btn" src="./img/seta_play.png" alt="Seta para ver a pergunta" onClick={() => verPergunta(index)}/>
     </PerguntaFechada>
     ));
 
@@ -34,30 +35,30 @@ export default function App () {
 
         if(naoLembrado.includes(p)){
             return(
-                <PerguntaFechada key={index}>
+                <PerguntaErro data-identifier="flashcard" key={index}>
                     <p>Pergunta {index + 1}</p>
-                    <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
-                </PerguntaFechada>
+                    <img data-identifier="flashcard-status" src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                </PerguntaErro>
             )
         }else if(quaseLembrado.includes(p)){
             return(
-                <PerguntaFechada key={index}>
+                <PerguntaQuase data-identifier="flashcard" key={index}>
                     <p>Pergunta {index + 1}</p>
-                    <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
-                </PerguntaFechada>
+                    <img data-identifier="flashcard-status" src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                </PerguntaQuase>
             )
         }else if(lembrado.includes(p)){
             return(
-                <PerguntaFechada key={index}>
+                <PerguntaCerto data-identifier="flashcard" key={index}>
                     <p>Pergunta {index + 1}</p>
-                    <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
-                </PerguntaFechada>
+                    <img data-identifier="flashcard-status" src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                </PerguntaCerto>
             )
         }else{
             return(
-                <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                <PerguntaFechada data-identifier="flashcard" key={index}>
                     <p>Pergunta {index + 1}</p>
-                    <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                    <img data-identifier="flashcard-show-btn" src="./img/seta_play.png" alt="Seta para ver a pergunta" onClick={() => verPergunta(index)}/>
                 </PerguntaFechada>
             )
         }
@@ -68,46 +69,44 @@ export default function App () {
         function jaRespondidas(p,index){
             if(naoLembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaErro data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                    </PerguntaErro>
                 )
             }else if(quaseLembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaQuase data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                    </PerguntaQuase>
                 )
             }else if(lembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaCerto data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                    </PerguntaCerto>
                 )
             }else if(indice === index){
                 setQuestionClicada(perguntas[indice]);
                 return(
-                    <PerguntaAberta onClick={() => verResposta(index)} key={index}>
-                        <p>{p.Q}</p>
-                        <img src="./img/seta_virar.png" alt="Seta para ver a pergunta" />
+                    <PerguntaAberta data-identifier="flashcard" key={index}>
+                        <p data-identifier="flashcard-question">{p.Q}</p>
+                        <img data-identifier="flashcard-turn-btn" src="./img/seta_virar.png" alt="Seta para ver a pergunta" onClick={() => verResposta(index)}/>
                     </PerguntaAberta>
                 )
             }else{
                 return(
-                    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                    <PerguntaFechada data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                        <img data-identifier="flashcard-show-btn" src="./img/seta_play.png" alt="Seta para ver a pergunta" onClick={() => verPergunta(index)}/>
                     </PerguntaFechada>
                 )
             }
         };
 
         setPergunta(perguntas.map(jaRespondidas));
-
-        setDesabilitar(false);
 
         console.log("Quero ver a pergunta");
     };
@@ -117,38 +116,37 @@ export default function App () {
         function perguntaComRespostas(p,index){
             if(naoLembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaErro data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_erro.png" alt="Seta para ver a pergunta" />
+                    </PerguntaErro>
                 )
             }else if(quaseLembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaQuase data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_quase.png" alt="Seta para ver a pergunta" />
+                    </PerguntaQuase>
                 )
             }else if(lembrado.includes(p)){
                 return(
-                    <PerguntaFechada key={index}>
+                    <PerguntaCerto data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
-                    </PerguntaFechada>
+                        <img data-identifier="flashcard-status" src="./img/icone_certo.png" alt="Seta para ver a pergunta" />
+                    </PerguntaCerto>
                 )
             }else if(indice === index){
                 setQuestionClicada(perguntas[indice]);
                 return(
-                    <PerguntaAberta onClick={() => verResposta(index)} key={index}>
-                        <p>{p.R}</p>
-                        <img src="./img/seta_virar.png" alt="Seta para ver a pergunta" />
+                    <PerguntaAberta data-identifier="flashcard" key={index}>
+                        <p data-identifier="flashcard-answer">{p.R}</p>
                     </PerguntaAberta>
                 )
             }else{
                 return(
-                    <PerguntaFechada onClick={() => verPergunta(index)} key={index}>
+                    <PerguntaFechada data-identifier="flashcard" key={index}>
                         <p>Pergunta {index + 1}</p>
-                        <img src="./img/seta_play.png" alt="Seta para ver a pergunta" />
+                        <img data-identifier="flashcard-show-btn" src="./img/seta_play.png" alt="Seta para ver a pergunta" onClick={() => verPergunta(index)}/>
                     </PerguntaFechada>
                 )
             }
@@ -171,6 +169,7 @@ export default function App () {
 
         if(contador + 1 === 4){
             alert("Você finalizou!");
+            setDesabilitar(false);
         }
     };
 
@@ -184,6 +183,7 @@ export default function App () {
 
         if(contador + 1 === 4){
             alert("Você finalizou!");
+            setDesabilitar(false);
         }
     };
 
@@ -197,6 +197,7 @@ export default function App () {
 
         if(contador + 1 === 4){
             alert("Você finalizou!");
+            setDesabilitar(false);
         }
     };
 
@@ -209,11 +210,13 @@ export default function App () {
             {pergunta}
             <Concluidos>
                 <ContainerBotao>
-                    <Botao1 disabled={desabilitar} onClick={() => naoLembrei(questionClicada)}>Não lembrei</Botao1>
-                    <Botao2 disabled={desabilitar} onClick={() => quaseNao(questionClicada)}>Quase não lembrei</Botao2>
-                    <Botao3 disabled={desabilitar} onClick={() => zapLembrei(questionClicada)}>Zap!</Botao3>
+                    <Botoes desabilitar={desabilitar} 
+                    naoLembrei={naoLembrei}
+                    quaseNao={quaseNao}
+                    zapLembrei={zapLembrei}
+                    questionClicada={questionClicada}/>
                 </ContainerBotao>
-                {contador}/4 CONCLUÍDOS
+                <p data-identifier="flashcard-counter">{contador}/4 CONCLUÍDOS</p>
             </Concluidos>
         </Container>
     )
@@ -288,21 +291,6 @@ const ContainerBotao = styled.div`
     }
 `
 
-const Botao1 = styled.button`
-    background: #FF3030;
-    border: 1px solid #FF3030;
-`
-
-const Botao2 = styled.button`
-    background: #FF922E;
-    border: 1px solid #FF922E;
-`
-
-const Botao3 = styled.button`
-    background: #2FBE34;
-    border: 1px solid #2FBE34;
-`
-
 const PerguntaFechada = styled.div`
     width: 300px;
     height: 35px;
@@ -327,6 +315,7 @@ const PerguntaFechada = styled.div`
         position: absolute;
         bottom: 20px;
         right: 15px;
+        cursor: pointer;
     }
 `
 
@@ -353,6 +342,91 @@ const PerguntaAberta = styled.div`
     img{
         position: absolute;
         bottom: 15px;
+        right: 15px;
+        cursor: pointer;
+    }
+`
+
+const PerguntaErro = styled.div`
+    width: 300px;
+    height: 35px;
+    background-color: #FFFFFF;
+    margin: 12px;
+    padding: 15px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    p {
+        font-family: 'Recursive', sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #FF3030;
+        text-decoration-line: line-through;
+    }
+    img{
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
+    }
+`
+
+const PerguntaQuase = styled.div`
+    width: 300px;
+    height: 35px;
+    background-color: #FFFFFF;
+    margin: 12px;
+    padding: 15px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    p {
+        font-family: 'Recursive', sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #FF922E;
+        text-decoration-line: line-through;
+    }
+    img{
+        position: absolute;
+        bottom: 20px;
+        right: 15px;
+    }
+`
+
+const PerguntaCerto = styled.div`
+    width: 300px;
+    height: 35px;
+    background-color: #FFFFFF;
+    margin: 12px;
+    padding: 15px;
+    box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    p {
+        font-family: 'Recursive', sans-serif;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #2FBE34;
+        text-decoration-line: line-through;
+    }
+    img{
+        position: absolute;
+        bottom: 20px;
         right: 15px;
     }
 `
