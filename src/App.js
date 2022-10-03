@@ -107,8 +107,6 @@ export default function App () {
         };
 
         setPergunta(perguntas.map(jaRespondidas));
-
-        console.log("Quero ver a pergunta");
     };
 
     function verResposta(indice){
@@ -155,14 +153,12 @@ export default function App () {
         setPergunta(perguntas.map(perguntaComRespostas));
 
         setDesabilitar(false);
-
-        console.log("Quero ver a resposta");
     };
 
     function naoLembrei(questao){
         naoLembrado.push(questao);
         respondidas.push(questao);
-        console.log("Não lembrei!", naoLembrado);
+
         setDesabilitar(true);
         setContador(contador + 1);
         setPergunta(perguntas.map(renderApp));
@@ -176,7 +172,7 @@ export default function App () {
     function quaseNao(questao){
         quaseLembrado.push(questao);
         respondidas.push(questao);
-        console.log("Quase não lembrei", quaseLembrado);
+
         setDesabilitar(true);
         setContador(contador + 1);
         setPergunta(perguntas.map(renderApp));
@@ -190,7 +186,7 @@ export default function App () {
     function zapLembrei(questao){
         lembrado.push(questao);
         respondidas.push(questao);
-        console.log("Zap, lembrei!", lembrado);
+
         setDesabilitar(true);
         setContador(contador + 1);
         setPergunta(perguntas.map(renderApp));
